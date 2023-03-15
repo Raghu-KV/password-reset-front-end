@@ -1,4 +1,3 @@
-import React from "react";
 import { Link } from "react-router-dom";
 import { useFormik } from "formik";
 import * as yup from "yup";
@@ -6,7 +5,6 @@ function SignUp() {
   const formik = useFormik({
     initialValues: {
       userName: "",
-      email: "",
       password: "",
     },
     validationSchema: yup.object({
@@ -14,10 +12,7 @@ function SignUp() {
         .string()
         .min(8, " minimum 8 character required")
         .required(" is required"),
-      email: yup
-        .string()
-        .email(" enter a valid e-mail")
-        .required(" is required"),
+      email: yup.string().email(" should be valid").required(" is required"),
       password: yup
         .string()
         .min(8, " minimum 8 character required")
@@ -72,7 +67,7 @@ function SignUp() {
               onBlur={formik.handleBlur}
             />
             <label
-              htmlFor="UserName"
+              htmlFor="email"
               className={`text-slate-800 font-medium text-lg ${
                 formik.touched.email && formik.errors.email && "text-red-500"
               }`}
@@ -99,7 +94,9 @@ function SignUp() {
             <label
               htmlFor="password"
               className={`text-slate-800 font-medium text-lg ${
-                formik.touched.email && formik.errors.email && "text-red-500"
+                formik.touched.password &&
+                formik.errors.password &&
+                "text-red-500"
               }`}
             >
               Password
@@ -113,7 +110,9 @@ function SignUp() {
               type="password"
               id="password"
               className={`block px-3 py-2 mb-10 bg-transparent border-b-4  border-slate-800 placeholder-slate-800 placeholder:opacity-50 focus:outline-none focus:border-b-blue-500 w-full text-slate-800 ${
-                formik.touched.email && formik.errors.email && "border-red-500"
+                formik.touched.password &&
+                formik.errors.password &&
+                "border-red-500"
               }`}
               placeholder="Enter your password..."
               name="password"
@@ -123,7 +122,7 @@ function SignUp() {
             />
             <button
               type="submit"
-              className="bg-slate-800 px-3 py-4 rounded-md text-lg font-semibold text-white hover:bg-slate-900 duration-200"
+              className="bg-slate-800 px-3 py-2 rounded-md text-lg font-semibold text-white hover:bg-slate-900 duration-200"
             >
               Create account
             </button>
