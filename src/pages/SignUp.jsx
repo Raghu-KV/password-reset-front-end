@@ -6,12 +6,14 @@ function SignUp() {
     initialValues: {
       userName: "",
       password: "",
+      email: "",
     },
     validationSchema: yup.object({
       userName: yup
         .string()
         .min(8, " minimum 8 character required")
         .required(" is required"),
+
       email: yup.string().email(" should be valid").required(" is required"),
       password: yup
         .string()
@@ -39,10 +41,10 @@ function SignUp() {
           <form className="px-10 my-4" onSubmit={formik.handleSubmit}>
             <label
               htmlFor="UserName"
-              className={`text-slate-800 font-medium text-lg ${
-                formik.touched.userName &&
-                formik.errors.userName &&
-                "text-red-500"
+              className={` font-medium text-lg ${
+                formik.touched.userName && formik.errors.userName
+                  ? "text-red-500"
+                  : "text-slate-800"
               }`}
             >
               Username
@@ -52,13 +54,14 @@ function SignUp() {
                   formik.errors.userName}
               </span>
             </label>
+
             <input
               type="text"
               id="UserName"
-              className={`block px-3 py-2  mb-10 bg-transparent border-b-4  border-slate-800 placeholder-slate-800 placeholder:opacity-50 focus:outline-none focus:border-b-blue-500 w-full text-slate-800 ${
-                formik.touched.userName &&
-                formik.errors.userName &&
-                "border-red-500"
+              className={`block px-3 py-2  mb-10 bg-transparent border-b-4   placeholder-slate-800 placeholder:opacity-50 focus:outline-none focus:border-b-blue-500 w-full text-slate-800 ${
+                formik.touched.userName && formik.errors.userName
+                  ? "border-red-500"
+                  : "border-slate-800"
               }`}
               placeholder="Enter your User name..."
               name="userName"
@@ -66,10 +69,13 @@ function SignUp() {
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
             />
+
             <label
               htmlFor="email"
-              className={`text-slate-800 font-medium text-lg ${
-                formik.touched.email && formik.errors.email && "text-red-500"
+              className={`font-medium text-lg ${
+                formik.touched.email && formik.errors.email
+                  ? "text-red-500"
+                  : "text-slate-800"
               }`}
             >
               Email
@@ -82,21 +88,24 @@ function SignUp() {
             <input
               type="email"
               id="email"
-              className={`block px-3 py-2 mb-10 bg-transparent border-b-4  border-slate-800 placeholder-slate-800 placeholder:opacity-50 focus:outline-none focus:border-b-blue-500 w-full text-slate-800 ${
-                formik.touched.email && formik.errors.email && "border-red-500"
+              className={`block px-3 py-2 mb-10 bg-transparent border-b-4  placeholder-slate-800 placeholder:opacity-50 focus:outline-none focus:border-b-blue-500 w-full text-slate-800 ${
+                formik.touched.email && formik.errors.email
+                  ? "border-red-500"
+                  : "border-slate-800"
               }`}
               placeholder="Enter your email..."
               name="email"
               value={formik.values.email}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
-            />{" "}
+            />
+
             <label
               htmlFor="password"
-              className={`text-slate-800 font-medium text-lg ${
-                formik.touched.password &&
-                formik.errors.password &&
-                "text-red-500"
+              className={`font-medium text-lg ${
+                formik.touched.password && formik.errors.password
+                  ? "text-red-500"
+                  : "text-slate-800"
               }`}
             >
               Password
@@ -109,10 +118,10 @@ function SignUp() {
             <input
               type="password"
               id="password"
-              className={`block px-3 py-2 mb-10 bg-transparent border-b-4  border-slate-800 placeholder-slate-800 placeholder:opacity-50 focus:outline-none focus:border-b-blue-500 w-full text-slate-800 ${
-                formik.touched.password &&
-                formik.errors.password &&
-                "border-red-500"
+              className={`block px-3 py-2 mb-10 bg-transparent border-b-4  placeholder-slate-800 placeholder:opacity-50 focus:outline-none focus:border-b-blue-500 w-full text-slate-800 ${
+                formik.touched.password && formik.errors.password
+                  ? "border-red-500"
+                  : "border-slate-800"
               }`}
               placeholder="Enter your password..."
               name="password"
@@ -120,6 +129,7 @@ function SignUp() {
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
             />
+
             <button
               type="submit"
               className="bg-slate-800 px-3 py-2 rounded-md text-lg font-semibold text-white hover:bg-slate-900 duration-200"

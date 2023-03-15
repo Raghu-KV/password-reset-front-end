@@ -23,11 +23,13 @@ function ForgetPassword() {
         <form className="px-10 my-4" onSubmit={formik.handleSubmit}>
           <label
             htmlFor="email"
-            className={`text-slate-800 font-medium text-lg ${
-              formik.touched.email && formik.errors.email && "text-red-500"
+            className={` font-medium text-lg ${
+              formik.touched.email && formik.errors.email
+                ? "text-red-500"
+                : "text-slate-800"
             }`}
           >
-            email
+            Email
             <span className="text-sm font-light">
               {formik.touched.email &&
                 formik.errors.email &&
@@ -37,8 +39,10 @@ function ForgetPassword() {
           <input
             type="email"
             id="email"
-            className={`block px-3 py-2 mb-3   bg-transparent border-b-4  border-slate-800 placeholder-slate-800 placeholder:opacity-50 focus:outline-none focus:border-b-blue-500 w-full text-slate-800 ${
-              formik.touched.email && formik.errors.email && "border-red-500"
+            className={`block px-3 py-2 mb-3   bg-transparent border-b-4   placeholder-slate-800 placeholder:opacity-50 focus:outline-none focus:border-b-blue-500 w-full text-slate-800 ${
+              formik.touched.email && formik.errors.email
+                ? "border-red-500"
+                : "border-slate-800"
             }`}
             placeholder="Enter your email..."
             name="email"
