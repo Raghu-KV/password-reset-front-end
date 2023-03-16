@@ -1,7 +1,12 @@
 import { Link } from "react-router-dom";
 import { useFormik } from "formik";
 import * as yup from "yup";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+
 function SignUp() {
+  const [message, setMessage] = useState("");
+  const navigate = useNavigate();
   const formik = useFormik({
     initialValues: {
       userName: "",
@@ -20,8 +25,22 @@ function SignUp() {
         .min(8, " minimum 8 character required")
         .required(" is required"),
     }),
-    onSubmit: (values) => {
+    onSubmit: async (values) => {
       console.log(values);
+      const responce = await fetch("http://localhost:4000/sign-up", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(values),
+      });
+      if (responce.status === 401) {
+        const failData = await responce.json();
+        setMessage(failData.message);
+      } else {
+        const data = await responce.json();
+        localStorage.setItem("token", data.token);
+        setMessage("");
+        navigate("/");
+      }
     },
   });
   return (
@@ -34,7 +53,7 @@ function SignUp() {
             className="rounded-l-md bg-left bg-no-repeat"
           />
         </div>
-        <div className="w-full lg:w-3/5 bg-slate-100 rounded-r-md flex flex-col justify-center">
+        <div className="w-full lg:w-3/5 bg-slate-100 rounded-r-md flex flex-col justify-center relative">
           <h2 className="text-center font-bold text-3xl text-slate-800 mt-4">
             Sign Up
           </h2>
@@ -143,6 +162,9 @@ function SignUp() {
               </Link>
             </span>
           </form>
+          <p className="absolute bottom-24 md:bottom-16 lg:bottom-28 left-12 text-red-500">
+            {message}
+          </p>
         </div>
       </div>
     </div>
