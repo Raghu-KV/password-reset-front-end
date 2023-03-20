@@ -1,8 +1,10 @@
 import { Link } from "react-router-dom";
+import { useState } from "react";
 import { useFormik } from "formik";
 import * as yup from "yup";
 
 function ForgetPassword() {
+  const [severMessage, setServrtMessage] = useState("");
   const formik = useFormik({
     initialValues: {
       email: "",
@@ -10,8 +12,22 @@ function ForgetPassword() {
     validationSchema: yup.object({
       email: yup.string().email(" should be valid").required(" is required"),
     }),
-    onSubmit: (values) => {
+    onSubmit: async (values) => {
       console.log(values);
+      const responce = await fetch("http://localhost:4000/forget-password", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(values),
+      });
+
+      if (responce.status === 401) {
+        const message = await responce.json();
+        setServrtMessage(message.message);
+      } else {
+        const data = await responce.json();
+        setServrtMessage(data.message);
+        console.log(data);
+      }
     },
   });
   return (
@@ -58,7 +74,7 @@ function ForgetPassword() {
             Submit
           </button>
         </form>
-        <p className="absolute bottom-6 left-40">mail sent </p>
+        <p className="absolute bottom-6 left-40">{severMessage} </p>
       </div>
     </div>
   );

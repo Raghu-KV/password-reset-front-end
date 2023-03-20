@@ -1,8 +1,13 @@
 import { useFormik } from "formik";
 import { useParams } from "react-router-dom";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import * as yup from "yup";
 
 function PasswordResetLink() {
+  const [serverMessage, setServerMessage] = useState("");
+  const navigate = useNavigate();
+
   const { id } = useParams();
   const { token } = useParams();
   console.log(id, token);
@@ -21,8 +26,25 @@ function PasswordResetLink() {
         .oneOf([yup.ref("password"), null], " must match password")
         .required(" is required"),
     }),
-    onSubmit: (values) => {
+    onSubmit: async (values) => {
       console.log(values);
+      const responce = await fetch(
+        `http://localhost:4000/forget-password/${id}/${token}`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(values),
+        }
+      );
+
+      if (responce.status === 401) {
+        const data = await responce.json();
+        setServerMessage(data.message);
+      } else {
+        const data = await responce.json();
+        setServerMessage(data.message);
+        navigate("/log-in");
+      }
     },
   });
   return (
@@ -99,9 +121,7 @@ function PasswordResetLink() {
             change password
           </button>
         </form>
-        <p className="absolute bottom-7 right-12">
-          password changed successfully Login{" "}
-        </p>
+        <p className="absolute bottom-7 right-12">{serverMessage} </p>
       </div>
     </div>
   );
