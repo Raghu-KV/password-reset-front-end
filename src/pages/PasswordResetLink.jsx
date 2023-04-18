@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import * as yup from "yup";
+import { backEndURL } from "../url";
 
 function PasswordResetLink() {
   const [serverMessage, setServerMessage] = useState("");
@@ -29,7 +30,7 @@ function PasswordResetLink() {
     onSubmit: async (values) => {
       console.log(values);
       const responce = await fetch(
-        `http://localhost:4000/forget-password/${id}/${token}`,
+        `${backEndURL}/forget-password/${id}/${token}`,
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },

@@ -5,6 +5,8 @@ import * as yup from "yup";
 
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { backEndURL } from "../url";
+
 function Login() {
   const [message, setMessage] = useState("");
   const navigate = useNavigate();
@@ -27,7 +29,7 @@ function Login() {
     }),
     onSubmit: async (values) => {
       console.log(values);
-      const responce = await fetch("http://localhost:4000/log-in", {
+      const responce = await fetch(`${backEndURL}/log-in`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(values),

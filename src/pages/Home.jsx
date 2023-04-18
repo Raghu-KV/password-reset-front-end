@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { backEndURL } from "../url";
 
 function Home() {
   const [userName, setUserName] = useState("");
@@ -8,7 +9,7 @@ function Home() {
   const getUserName = async () => {
     const localStorageToken = localStorage.getItem("token");
 
-    const responce = await fetch("http://localhost:4000/who-has-logged-in", {
+    const responce = await fetch(`${backEndURL}/who-has-logged-in`, {
       method: "GET",
       headers: { "x-auth-token": localStorageToken },
     });
